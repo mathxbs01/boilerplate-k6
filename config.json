@@ -1,0 +1,7 @@
+{
+  "CI": 5,
+  "baseUrlApi": "https://api.familhao.com/",
+  "tenantID": "00000000000000000000000000",
+  "cepFrete": "01310100",
+  "limiteCompras": 5
+}

@@ -1,0 +1,36 @@
+trigger:
+  - main
+
+stages:
+  - stage: __default
+    jobs:
+      - job: BuildAndTest
+        displayName: 'Job de Build e Teste'
+        pool:
+          vmImage: 'ubuntu-latest'
+        steps:
+          - task: NodeTool@0
+            inputs:
+              versionSpec: '22.15.1'
+            displayName: 'Install Node.js'
+
+          - script: npm install --global yarn
+            displayName: 'Install package yarn'
+
+          - script: yarn install
+            displayName: 'Yarn install'
+
+          - script: |
+              npm run test
+            displayName: 'Execução teste'
+            continueOnError: true
+
+          - task: PublishTestResults@2
+            displayName: 'Geração relatório JUnit'
+            condition: succeededOrFailed()
+            inputs:
+              testResultsFormat: 'JUnit'
+              testResultsFiles: |
+                $(System.DefaultWorkingDirectory)/test-results/api-junit-results.xml
+              searchFolder: '$(System.DefaultWorkingDirectory)/test-results'
+              publishRunAttachments: true
