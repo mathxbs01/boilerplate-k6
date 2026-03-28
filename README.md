@@ -16,8 +16,8 @@ A estrutura segue um padrão em **camadas**, separando responsabilidades entre t
 boilerplate-k6/
 ├── src/
 │   ├── tests/              # Camada de Testes (Regras de Negócio)
-│   │   └── example/        # Exemplo de teste de login
-│   │       └── login.js
+│   │   └── example/        # Exemplo de teste de produto
+│   │       └── products.js
 │   └── utils/              # Camada de Utilitários
 │       ├── api/            # Cliente HTTP genérico
 │       │   └── base.js
@@ -37,8 +37,8 @@ boilerplate-k6/
 - Contém os scripts de teste específicos por módulo/funcionalidade
 - Responsável pela **lógica de negócio** dos testes
 - Utiliza validações, métricas customizadas e cenários de teste
-- Exemplo: `src/tests/example/login.js`
-- Organização: cada funcionalidade em seu diretório, ex: `tests/home`, `tests/login`
+- Exemplo: `src/tests/example/products.js`
+- Organização: cada funcionalidade em seu diretório, ex: `tests/home`, `tests/product`
 
 **Responsabilidades:**
 - Definir grupos de testes (`group()`)
@@ -92,9 +92,6 @@ Arquivo central de configuração com variáveis de ambiente.
 **Variáveis:**
 - `CI` - Nível de isolamento (concorrência)
 - `baseUrlApi` - URL base da API
-- `tenantID` - Identificador do tenant
-- `cepFrete` - CEP para testes de frete
-- `limiteCompras` - Limite de compras para validação
 
 ---
 
@@ -108,19 +105,19 @@ Arquivo central de configuração com variáveis de ambiente.
 
 **Via NPM Scripts:**
 ```bash
-# Teste de Login
-npm run login
+# Teste de Produto
+npm run product
 
 ```
 
 **Via K6 CLI direto:**
 ```bash
-k6 run src/tests/example/login.js
+k6 run src/tests/example/products.js
 ```
 
 **Com variáveis de ambiente:**
 ```bash
-k6 run --env token=seu_token --env baseUrlApi=https://api.example.com src/tests/example/login.js
+k6 run --env token=seu_token --env baseUrlApi=https://api.example.com src/tests/example/products.js
 ```
 
 ### Parâmetros de Execução
@@ -134,9 +131,8 @@ Exemplo:
 ```bash
 k6 run \
   --env token=abc123 \
-  --env baseUrlApi=https://staging-api.familhao.com/ \
-  --env tenantID=tenant-123 \
-  src/tests/example/login.js
+  --env baseUrlApi=https://api.faker.com/ \
+  src/tests/example/products.js
 ```
 
 ---
@@ -152,7 +148,7 @@ Para implementar uma nova feature, adicione código nas seguintes camadas:
 ```javascript
 // Adicione nas variáveis APIPost, APIGet, etc
 let APIPost = {
-  loginPost: API + 'login',
+  productPost: API + 'product',
   meuNovoEndpoint: API + 'meu-novo-endpoint'  // ← Novo
 };
 ```
@@ -243,7 +239,7 @@ export function handleSummary(data) {
 
 Após a execução, abra:
 ```
-./report/login-test.html
+./report/product-test.html
 ```
 
 ---
