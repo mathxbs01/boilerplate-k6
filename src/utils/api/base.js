@@ -4,19 +4,19 @@ const env = JSON.parse(open('../../../config.json'));
 const API = __ENV.baseUrlApi ?? env.baseUrlApi;
 
 let APIGet = {
-  loginGet: API + 'login',
+  productGet: API + 'product',
 };
 
 let APIPost = {
-  loginPost: API + 'login',
+  productPost: API + 'product',
 };
 
 let APIDelete = {
-  loginDelete: APIVertem + 'login',
+  productDelete: API + 'product',
 };
 
 let APIPut = {
-  loginPut: API + 'login',
+  productPut: API + 'product',
 };
 
 export class HttpClient {

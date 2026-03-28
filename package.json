@@ -1,4 +1,8 @@
 {
+  "name": "boilerplate-k6",
+  "version": "1.0.0",
+  "description": "Boilerplate para testes de performance utilizando k6",
+  "author": "Matheus Batista dos Santos",
   "dependencies": {
     "dotenv": "^17.3.1",
     "fs": "^0.0.1-security",
@@ -9,6 +13,6 @@
     "k6-reporter": "github:benc-uk/k6-reporter"
   },
   "scripts": {
-    "login": "k6 run --out json=report/output.json src/tests/example/login.js"
+    "product": "k6 run --out json=report/output.json src/tests/example/products.js"
   }
 }

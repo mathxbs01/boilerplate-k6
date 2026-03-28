@@ -18,12 +18,12 @@ const defaultHeaders = {
 
 export const errorRate = new Rate('errors');
 
-export const loginSuccessRate = new Rate('login_success_rate');
-export const loginResponseTime = new Trend('login_response_time', true);
+export const productSuccessRate = new Rate('product_success_rate');
+export const productResponseTime = new Trend('product_response_time', true);
 
 export function handleSummary(data) {
   return {
-    'report/login-test.html': htmlReport(data),
+    'report/product-test.html': htmlReport(data),
   };
 }
 
@@ -39,22 +39,25 @@ export const options = {
     errors: ['rate<0.01'],
 
     // Success Rate por endpoint
-    login_success_rate: ['rate>0.99'],
+    product_success_rate: ['rate>0.99'],
 
     // Response Time por endpoint
-    login_response_time: ['p(95)<400'],
+    product_response_time: ['p(95)<400'],
   },
 };
 
 export default function () {
-  group('Login - login', function () {
+  group('Product - create', function () {
     const res = httpClient.usePost({
-      nomeRequest: 'login',
+      nomeRequest: 'productPost',
       headers: defaultHeaders,
       token,
       body: {
-        login: telefoneCelular.toString(),
-        type: 0,
+        title: 'New Product',
+        price: 29.99,
+        description: 'Example product created by k6',
+        category: 'electronics',
+        image: 'https://example.com/product-image.jpg',
       },
     });
 
@@ -64,11 +67,11 @@ export default function () {
         'status 200': (r) => r.status === 200,
         'response < 400ms': (r) => r.timings.duration < 400,
       },
-      { endpoint: 'login' },
+      { endpoint: 'product' },
     );
 
-    errorRate.add(!success, { endpoint: 'login' });
-    loginSuccessRate.add(res.status === 200, { endpoint: 'login' });
-    loginResponseTime.add(res.timings.duration, { endpoint: 'login' });
+    errorRate.add(!success, { endpoint: 'product' });
+    productSuccessRate.add(res.status === 200, { endpoint: 'product' });
+    productResponseTime.add(res.timings.duration, { endpoint: 'product' });
   });
 }

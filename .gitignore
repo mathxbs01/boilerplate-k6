@@ -5,3 +5,5 @@
 /dist
 output.json
 /report/*
+.qodo
+.package-lock.json
